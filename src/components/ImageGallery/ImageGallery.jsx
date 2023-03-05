@@ -71,8 +71,15 @@ export class ImageGallery extends Component {
         }));
     }
 
+    compareTotalPages = () => {
+        const totalPages = this.state.totalImages / limit;
+        const restTotalPages = this.state.pictures.length / limit;
+        return totalPages > restTotalPages;
+    }
+
     render() {
         const { pictures, loading, showModal, largeImg, totalImages } = this.state;
+        const hasMorePages = this.compareTotalPages();
 
         return (
             <Container>
@@ -85,7 +92,7 @@ export class ImageGallery extends Component {
                         <img src={largeImg} alt={largeImg} width="800" />
                     </Modal>
                 }
-                {totalImages > limit && <Button onClick={this.handleLoad}/>}
+                {hasMorePages && totalImages > limit && <Button onClick={this.handleLoad}/>}
             </Container>
         )
     }
